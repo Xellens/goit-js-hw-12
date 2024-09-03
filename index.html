@@ -2,29 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:wght@700&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goit-js-hw-11</title>
+    <title>Vanilla App Template</title>
     <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-D3eAW7nd.js">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-CIiTbfJw.css">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-BWuBPKg2.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-DnveWo0P.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-Dk-d6Emu.css">
   </head>
   <body>
     <section class="gallery-section">
-      <form class="search-form js-search-form">
-        
-        <label>
-          <input class="search-input js-search-input"
-             type="text" name="user_query" placeholder="Search Images"> </input>
-        </label>
-
-        <button class="search-btn" type="submit">Search</button>
-      </form>
-
-      <ul class="gallery js-gallery"></ul>
-      
-      <span class="loader is-hidden"></span>
-      <button class="load-more js-load-more is-hidden-load" type="button">Load more</button>
-    
+      <div class="container">
+        <form class="search-form js-search-form">
+          <input class="search-input js-search-input" type="text" name="user_query" required>
+          <button class="search-btn" type="submit">Search</button>
+        </form>
+        <ul class="gallery js-gallery"></ul>
+      </div>
+      <div class="loader js-loader is-hidden"></div>
+        </div>
+        <div class="loader-box">
+          <button class="loader-btn is-hidden">Load more</button>
+        </div>
+  </body>
     </section>
   </body>
+</html>
