@@ -1,28 +1,28 @@
 export const createGalleryCardTemplate = imgInfo => {
-  return ` <li class="gallery-item">
+  return `
+    <li class="gallery-card">
     <a class="gallery-link" href="${imgInfo.largeImageURL}">
-      <img class="gallery-img"
-      src="${imgInfo.webformatURL}"
-      alt="${imgInfo.tags}"
-      loading="lazy" />
+      <img 
+      class="gallery-img" 
+      src="${imgInfo.webformatURL}" 
+      alt="${imgInfo.tags}" />
     </a>
-    <ul class="gallery-info">
-      <li class="gallery-info-item">
-        <p class="gallery-info-title">Likes</p>
-        <p class="gallery-info-text">${imgInfo.likes}</p>
+  <div class="wrapper">
+    <ul class="img-content-wrapper">
+      <li class="text-info">
+        Likes<span class="number">${imgInfo.likes}</span>
       </li>
-      <li class="gallery-info-item">
-        <p class="gallery-info-title">Views</p>
-        <p class="gallery-info-text">${imgInfo.views}</p>
+      <li class="text-info">
+        Views<span class="number">${imgInfo.views}</span>
       </li>
-      <li class="gallery-info-item">
-        <p class="gallery-info-title">Comments</p>
-        <p class="gallery-info-text">${imgInfo.comments}</p>
+      <li class="text-info">
+        Comments<span class="number">${imgInfo.comments}</span>
       </li>
-      <li class="gallery-info-item">
-        <p class="gallery-info-title">Downloads</p>
-        <p class="gallery-info-text">${imgInfo.downloads}</p>
+      <li class="text-info">
+        Downloads<span class="number">${imgInfo.downloads}</span>
       </li>
     </ul>
-  </li>`;
+  </div>
+</li>
+    `;
 };
