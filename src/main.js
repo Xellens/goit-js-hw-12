@@ -6,7 +6,7 @@ import SimpleLightbox from 'simplelightbox';
 const searchFormEl = document.querySelector('.js-search-form');
 const galleryEl = document.querySelector('.js-gallery');
 const loaderEl = document.querySelector('.loader');
-const loadMoreBtnEl = document.querySelector('.loader-btn'); //шукаємо кнопку завантажити ще
+const loadMoreBtnEl = document.querySelector('.loader-btn');
 loadMoreBtnEl.insertAdjacentElement('afterend', loaderEl);
 const simpleLightbox = new SimpleLightbox('.js-gallery a', {
   captionDelay: 250,
@@ -14,17 +14,16 @@ const simpleLightbox = new SimpleLightbox('.js-gallery a', {
   captionsData: 'alt',
   overlayOpacity: 1,
 });
-let currentPage = 1; //номер групи при першому запиті, за замовчуванням
-let searchedValue = ''; // Зробили змінну глобальною, щоб використ у ф.кнопки завантажити ще
+let currentPage = 1;
+let searchedValue = '';
 let quantityElements = 0;
 
 const onSearchFormSubmit = async event => {
   try {
-    event.preventDefault(); // Зупиняємо дію браузера за замовчуванням
+    event.preventDefault();
 
-    searchedValue = searchFormEl.elements.user_query.value.trim(); // Зчитуємо значення пошукового запиту
+    searchedValue = searchFormEl.elements.user_query.value.trim();
 
-    // Якщо поле пусте, показуємо попередження
     if (searchedValue === '') {
       iziToast.warning({
         message: 'Please enter a search query.',
@@ -32,35 +31,33 @@ const onSearchFormSubmit = async event => {
       });
       return;
     }
-    galleryEl.innerHTML = ''; // Очищаємо галерею перед новим пошуком
-    quantityElements = 0; // Скидаємо кількість елементів
-    loaderEl.classList.remove('is-hidden'); // Показуємо лоадер
+    galleryEl.innerHTML = '';
+    quantityElements = 0;
+    loaderEl.classList.remove('is-hidden');
     currentPage = 1;
-    const response = await fetchPhotos(searchedValue, currentPage); // 1Запит до API, викликаємо ф-ію і передаємо в неї значення інпута та номер групи
-    const data = response.data; // Отримуємо дані з відповіді
+    const response = await fetchPhotos(searchedValue, currentPage);
+    const data = response.data;
 
-    // Перевірка наявності результатів
     if (!data.hits || data.hits.length === 0) {
       iziToast.error({
         message:
           'Sorry, there are no images matching your search query. Please try again!',
         position: 'bottomRight',
       });
-      galleryEl.innerHTML = ''; // Очищаємо галерею
-      searchFormEl.reset(); // Очищаємо інпут
-      loaderEl.classList.add('is-hidden'); // Ховаємо лоадер
-      loadMoreBtnEl.classList.add('is-hidden'); // Ховаємо кнопку, якщо результатів немає
+      galleryEl.innerHTML = '';
+      searchFormEl.reset();
+      loaderEl.classList.add('is-hidden');
+      loadMoreBtnEl.classList.add('is-hidden');
       return;
     }
 
-    // Створюємо шаблон карток зображень
     const galleryCardsTemplate = data.hits
       .map(imgDetails => createGalleryCardTemplate(imgDetails))
       .join('');
-    galleryEl.innerHTML = galleryCardsTemplate; // Вставляємо картки у галерею
-    simpleLightbox.refresh(); // Оновлюємо SimpleLightbox
+    galleryEl.innerHTML = galleryCardsTemplate;
+    simpleLightbox.refresh();
     loadMoreBtnEl.classList.remove('is-hidden');
-    searchFormEl.reset(); // Очищаємо поле введення після успішного запиту
+    searchFormEl.reset();
     quantityElements += response.data.hits.length;
   } catch (err) {
     console.log(err);
@@ -69,18 +66,18 @@ const onSearchFormSubmit = async event => {
       position: 'bottomRight',
     });
   } finally {
-    loaderEl.classList.add('is-hidden'); // Ховаємо лоадер
+    loaderEl.classList.add('is-hidden');
   }
 };
 
 const onLoadMoreBtnClick = async event => {
   try {
-    currentPage++; //збільш номер групи на одиницю при кожному кліку на кн
-    const response = await fetchPhotos(searchedValue, currentPage); // і робимо запит на сервер виклик ф fetchPhotos()
-    const data = response.data; // Витягуємо дані з відповіді
+    currentPage++;
+    const response = await fetchPhotos(searchedValue, currentPage);
+    const data = response.data;
 
     if (!data.hits || data.hits.length === 0) {
-      loadMoreBtnEl.classList.add('is-hidden'); // Ховаємо кнопку, якщо результатів немає
+      loadMoreBtnEl.classList.add('is-hidden');
       return;
     }
     const galleryCardsTemplate = data.hits
@@ -88,16 +85,13 @@ const onLoadMoreBtnClick = async event => {
       .join('');
     galleryEl.insertAdjacentHTML('beforeend', galleryCardsTemplate);
     simpleLightbox.refresh();
-    // Отримання висоти першої картки галереї
     const { height: cardHeight } =
       galleryEl.firstElementChild.getBoundingClientRect();
 
-    // Плавне прокручування сторінки на дві висоти картки
     scrollBy({
       top: cardHeight * 2,
       behavior: 'smooth',
     });
-    // Цей блок коду перевіряє, чи кількість завантажених елементів quantityElements перевищує або дорівнює загальній кількості доступних результатів response.data.totalHits. Якщо це так, показується повідомлення за допомогою iziToast, що ви досягли кінця результатів пошуку. Також ховається кнопка завантаження ще (loadMoreBtnEl) та лоадер (loaderEl).
     quantityElements += response.data.hits.length;
 
     if (Math.ceil(data.totalHits / 15) === currentPage) {
@@ -116,7 +110,6 @@ const onLoadMoreBtnClick = async event => {
     console.log(err);
   }
 };
-// Додаємо обробник події на форму
+
 searchFormEl.addEventListener('submit', onSearchFormSubmit);
-//Додаємо обробник події на кнопку
 loadMoreBtnEl.addEventListener('click', onLoadMoreBtnClick);

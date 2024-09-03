@@ -2,9 +2,6 @@
 @import 'izitoast/dist/css/iziToast.min.css';
 @import '../../node_modules/simplelightbox/dist/simple-lightbox.min.css';
 
-.is-hidden {
-  display: none;
-}
 .gallery-section {
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
@@ -165,9 +162,6 @@
   }
 }
 
-.is-hidden {
-  display: none;
-}
 .gallery-section {
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
@@ -187,7 +181,8 @@
   color: #1eaeec;
 }
 
-.loader.is-hidden {
+.loader,
+.is-hidden {
   display: none;
 }
 
