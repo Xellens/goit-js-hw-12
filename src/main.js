@@ -111,12 +111,9 @@ const onLoadMoreBtnClick = async event => {
     quantityElements += response.data.hits.length;
 
     if (Math.ceil(data.totalHits / 15) === currentPage) {
-      iziToast.show({
+      iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
-        position: 'topRight',
-        backgroundColor: '#ef4040',
-        messageColor: '#fff',
-        timeout: 5000,
+        position: 'bottomRight',
       });
 
       loadMoreBtnEl.classList.add('is-hidden');
